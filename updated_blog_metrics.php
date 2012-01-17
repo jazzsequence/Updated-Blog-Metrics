@@ -213,15 +213,15 @@ function bm_get_stats($period="alltime",$authorid=0) {
 	$stats['commentwords'] 	= bm_wordcount($commentwordsquery,"comment_content","comment_ID");
 	if ($period == "alltime") {
 		$stats['firstpost'] = $wpdb->get_var($firstpostquery);
-		$stats['bloggingyears'] 	= floor( ( time() - strtotime($stats['firstpost']) ) / 2628000);
-		if ($stats['bloggingyears'] == 0) {
-			$stats['bloggingyears'] = 1;
+		$stats['bloggingmonths'] 	= floor( ( time() - strtotime($stats['firstpost']) ) / 2628000);
+		if ($stats['bloggingmonths'] == 0) {
+			$stats['bloggingmonths'] = 1;
 		}
 	} else if ($period == "year") {
-		$stats['bloggingyears']	= 1;
+		$stats['bloggingmonths']	= 1;
 	}
 	if ($stats['posts'] > 0) {
-		$stats['avgposts'] 		= round($stats['posts'] / $stats['bloggingyears'],1);
+		$stats['avgposts'] 		= round($stats['posts'] / $stats['bloggingmonths'],1);
 	}
 
 	if ($stats['comments'] > 0 && $stats['posts'] > 0) {
@@ -318,7 +318,7 @@ function bm_print_stats($stats) {
 		echo '<tr><td>Words in comments:</td><td>'.$stats['commentwords']."</td></tr>";
 		echo '<tr><td>Trackbacks:</td><td>'.$stats['trackbacks']."</td></tr>";
 		if ($stats['period'] == "alltime") {
-			echo '<tr><td>years blogging: &nbsp;</td><td>'.$stats['bloggingyears']."</td></tr>";
+			echo '<tr><td>Months blogging: &nbsp;</td><td>'.$stats['bloggingmonths']."</td></tr>";
 		}
 		echo '</table>';
 	}
